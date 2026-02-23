@@ -24,6 +24,13 @@
         "*.fasta-index.tar.gz"
       ],
       "help": "tar.gz containing genome.fa and genome.fa.fai. Must match reference genome build used."
+    },
+    {
+      "name": "bcftools_options",
+      "label": "Additional bcftools norm options",
+      "class": "string",
+      "optional": true,
+      "help": "String of space-separated args and values to pass to bcftools norm"
     }
   ],
   "outputSpec": [

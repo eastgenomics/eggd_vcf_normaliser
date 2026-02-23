@@ -25,7 +25,11 @@ _create_output_name() {
 _normalise_vcf() {
     mark-section "Normalising and indexing VCF"
     echo "Normalising and indexing VCF..."
-    bcftools norm "$input_vcf_name" -f "$genome_fasta" -m -any --keep-sum AD -Oz -o "$output_vcf"
+    if [[ -n $bcftools_options ]]; then
+        bcftools norm "$input_vcf_name" -f "$genome_fasta" $bcftools_options -Oz -o "$output_vcf"
+    else
+        bcftools norm "$input_vcf_name" -f "$genome_fasta" -Oz -o "$output_vcf"
+    fi
     tabix -p vcf "$output_vcf"
 }
 
@@ -37,7 +41,6 @@ _upload_outputs() {
     dx-jobutil-add-output output_vcf "$uploaded_vcf" --class=file
     dx-jobutil-add-output output_index "$uploaded_index" --class=file
 }
-
 
 main() {
     set -exo pipefail
