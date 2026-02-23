@@ -5,7 +5,9 @@
 Normalises variants in a supplied input VCF, using `bcftools norm` via the htslib suite of tools (v1.22.0).
 
 The default behaviour of the app is to run the following command:
-`bcftools norm "$input_vcf" -f "$genome_fasta" -Oz -o "$output_vcf"`
+```
+bcftools norm "$input_vcf" -f "$genome_fasta" -Oz -o "$output_vcf"
+```
 
 Additional arguments for this command can optionally be supplied using the `bcftools_options` input.
 
