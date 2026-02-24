@@ -12,8 +12,7 @@ _extract_reference() {
     mark-section "Extracting reference"
     echo "Extracting reference archive..."
     tar -I pigz -xf "$fasta_tar_name"
-    genome_fasta=$(find ~/ -type f -name "*.fa" -print0)
-    echo "Reference genome fasta used: ${genome_fasta}"
+    genome_fasta=$(find ~/ -type f -name "*.fa")
 }
 
 _create_output_name() {
