@@ -12,7 +12,8 @@ _extract_reference() {
     mark-section "Extracting reference"
     echo "Extracting reference archive..."
     tar -I pigz -xf "$fasta_tar_name"
-    genome_fasta="genome.fa"
+    genome_fasta=$(find ~/ -type f -name "*.fa" -print0)
+    echo "Reference genome fasta used: ${genome_fasta}"
 }
 
 _create_output_name() {
@@ -26,7 +27,8 @@ _normalise_vcf() {
     mark-section "Normalising and indexing VCF"
     echo "Normalising and indexing VCF..."
     if [[ -n $bcftools_options ]]; then
-        bcftools norm "$input_vcf_name" -f "$genome_fasta" $bcftools_options -Oz -o "$output_vcf"
+        read -r -a bcftools_args <<< "$bcftools_options"
+        bcftools norm "$input_vcf_name" -f "$genome_fasta" "${bcftools_args[@]}" -Oz -o "$output_vcf"
     else
         bcftools norm "$input_vcf_name" -f "$genome_fasta" -Oz -o "$output_vcf"
     fi
