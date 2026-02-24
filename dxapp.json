@@ -1,0 +1,94 @@
+{
+  "name": "eggd_vcf_normaliser",
+  "title": "eggd_vcf_normaliser",
+  "summary": "Normalises variants in a supplied VCF",
+  "dxapi": "1.0.0",
+  "version": "1.0.0",
+  "inputSpec": [
+    {
+      "name": "input_vcf",
+      "label": "VCF of variants to be normalised",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.vcf.gz"
+      ]
+    },
+    {
+      "name": "fasta_tar",
+      "label": "Reference genome fasta and index",
+      "class": "file",
+      "optional": false,
+      "group": "files",
+      "patterns": [
+        "*.fasta-index.tar.gz"
+      ],
+      "help": "tar.gz containing genome.fa and genome.fa.fai. Must match reference genome build used."
+    },
+    {
+      "name": "bcftools_options",
+      "label": "Additional bcftools norm options",
+      "class": "string",
+      "optional": true,
+      "help": "String of space-separated args and values to pass to bcftools norm"
+    }
+  ],
+  "outputSpec": [
+    {
+      "name": "output_vcf",
+      "label": "VCF of normalised variants",
+      "class": "file",
+      "patterns": [
+          "*.vcf.gz"
+        ]
+    },
+    {
+      "name": "output_index",
+      "label": "Index for VCF of normalised variants",
+      "class": "file",
+      "patterns": [
+          "*.vcf.gz.tbi"
+        ]
+    }
+  ],
+  "runSpec": {
+    "timeoutPolicy": {
+      "*": {
+        "hours": 2
+      }
+    },
+    "interpreter": "bash",
+    "file": "src/code.sh",
+    "distribution": "Ubuntu",
+    "release": "24.04",
+    "version": "0",
+    "headJobOnDemand": true,
+    "assetDepends": [
+      {
+        "name": "htslib_suite_asset",
+        "project": "project-Fkb6Gkj433GVVvj73J7x8KbV",
+        "folder": "/app_assets/htslib/htslib_v1.22.0",
+        "version": "1.22"
+      }
+    ]
+  },
+  "authorizedUsers": [
+    "org-emee_1"
+  ],
+  "developers":[
+    "org-emee_1"
+  ],
+  "access": {
+    "project": "CONTRIBUTE",
+    "allProjects":"VIEW"
+  },
+  "regionalOptions": {
+    "aws:eu-central-1": {
+      "systemRequirements": {
+        "*": {
+          "instanceType": "mem1_ssd2_v2_x8"
+        }
+      }
+    }
+  }
+}
